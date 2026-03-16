@@ -80,8 +80,8 @@ public sealed class Startup
             });
         }
 
-        app.UseMiddleware<StudentInfoMiddleware>();
-        app.UseMiddleware<ResponseTimeMiddleware>();
+        //app.UseMiddleware<StudentInfoMiddleware>();
+        //app.UseMiddleware<ResponseTimeMiddleware>();
 
         app.UseRouting();
 
