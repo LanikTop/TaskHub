@@ -14,7 +14,8 @@ namespace Api.Attributes
                 return;
             }
 
-            var nameProperty = requestValue.GetType().GetProperty("name", BindingFlags.IgnoreCase);
+            var nameProperty = requestValue.GetType().GetProperty("name",
+                BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
 
             if (nameProperty == null)
             {
