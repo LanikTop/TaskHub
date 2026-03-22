@@ -15,6 +15,6 @@ public static class LogicStartUp
     /// <param name="services">Коллекция сервисов</param>
     public static void AddLogic(this IServiceCollection services)
     {
-        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUserService, UserService>(); 
     }
 }
