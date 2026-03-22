@@ -1,9 +1,12 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Dal.Entities;
 
 /// <summary>
 /// Пользователь
 /// </summary>
-public sealed class User
+[Table("users")]
+public class User
 {
     /// <summary>
     /// Идентификатор пользователя
@@ -19,4 +22,6 @@ public sealed class User
     /// Дата и время последней активности пользователя в UTC
     /// </summary>
     public DateTimeOffset LastActivityUtc { get; set; }
+
+    public virtual ICollection<TaskEntity> Tasks { get; set; } = new List<TaskEntity>();
 }
