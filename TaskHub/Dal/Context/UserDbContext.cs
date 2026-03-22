@@ -27,6 +27,9 @@ public sealed class UserDbContext : DbContext
 
             entity.HasKey(x => x.Id);
 
+            entity.Property(x => x.Id)
+            .HasColumnName("id");
+
             entity.Property(x => x.Name)
                 .HasColumnName("name")
                 .HasMaxLength(200);
@@ -34,6 +37,16 @@ public sealed class UserDbContext : DbContext
             entity.Property(x => x.LastActivityUtc)
                 .HasColumnName("last_activity_utc")
                 .IsRequired();
+
+            entity.HasMany(u => u.Tasks)
+                .WithOne(t => t.User)
+                .HasForeignKey(t => t.CreatedByUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable("users");
         });
 
         base.OnModelCreating(modelBuilder);
