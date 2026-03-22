@@ -1,9 +1,12 @@
+using Api.Middleware;
+using Api.Services.Tasks;
+using Api.Services.Tasks.Interfaces;
+using Api.UseCases.Tasks;
 using Api.UseCases.Users;
 using Api.UseCases.Users.Interfaces;
 using Dal;
 using Logic;
 using Microsoft.OpenApi.Models;
-using Api.Middleware;
 
 namespace Api;
 
@@ -39,7 +42,16 @@ public sealed class Startup
         services.AddLogic();
         
         services.AddScoped<IManageUserUseCase, ManageUserUseCase>();
-        
+
+        services.AddScoped<CreateTaskUseCase>();
+        services.AddScoped<GetTasksUseCase>();
+        services.AddScoped<GetTaskUseCase>();
+        services.AddScoped<SetTaskTitleUseCase>();
+        services.AddScoped<DeleteTaskUseCase>();
+        services.AddScoped<DeleteTasksUseCase>();
+
+        services.AddScoped<ITaskService, TaskService>();
+
         services.AddCors(options =>
         {
             options.AddDefaultPolicy(builder =>
