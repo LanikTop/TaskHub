@@ -35,9 +35,12 @@ public sealed class TasksController : ControllerBase
         return Ok(tasks);
     }
 
-    [HttpGet("{id:guid}")]
-    public async Task<ActionResult<TaskResponse>> GetTaskByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<TaskResponse>> GetTaskByIdAsync([FromRouteTaskId] Guid id, CancellationToken cancellationToken)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var taskResponse = await _taskService.GetTaskByIdAsync(id);
 
         if (taskResponse is null)
@@ -46,9 +49,9 @@ public sealed class TasksController : ControllerBase
         return Ok(taskResponse);
     }
 
-    [HttpPut("{id:guid}/title")]
+    [HttpPut("{id}/title")]
     public async Task<IActionResult> SetTaskTitleAsync(
-        [FromRoute] Guid id,
+        [FromRouteTaskId] Guid id,
         [FromBody] SetTaskTitleRequest? request,
         CancellationToken cancellationToken)
     {
@@ -59,8 +62,8 @@ public sealed class TasksController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteTaskByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteTaskByIdAsync([FromRouteTaskId] Guid id, CancellationToken cancellationToken)
     {
         var deleted = await _taskService.DeleteTaskByIdAsync(id);
         if (deleted == false)
