@@ -1,4 +1,6 @@
+using Api.Filters;
 using Api.Middleware;
+using Api.ModelBinders;
 using Api.Services.Tasks;
 using Api.Services.Tasks.Interfaces;
 using Api.UseCases.Tasks;
@@ -38,6 +40,10 @@ public sealed class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
+        services.Configure<Microsoft.AspNetCore.Mvc.ApiBehaviorOptions>(options =>
+        {
+            options.SuppressModelStateInvalidFilter = true;
+        });
         services.AddDal();
         services.AddLogic();
         
