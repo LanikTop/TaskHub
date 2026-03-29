@@ -6,12 +6,16 @@ namespace Api.Attributes
     {
         public override void OnResultExecuting(ResultExecutingContext context)
         {
-            context.HttpContext.Response.OnStarting(() =>
+            if (!context.HttpContext.Response.HasStarted)
             {
-                context.HttpContext.Response.Headers["X-Student-Name"] = "Safiullin Ruslan Ilfatovich";
-                context.HttpContext.Response.Headers["X-Student-Group"] = "PA-01";
-                return Task.CompletedTask;
-            });
+                context.HttpContext.Response.OnStarting(() =>
+                {
+                    context.HttpContext.Response.Headers["X-Student-Name"] = "Safiullin Ruslan Ilfatovich";
+                    context.HttpContext.Response.Headers["X-Student-Group"] = "PA-01";
+                    return Task.CompletedTask;
+                });
+            }
+            base.OnResultExecuting(context);
         }
     }
 }

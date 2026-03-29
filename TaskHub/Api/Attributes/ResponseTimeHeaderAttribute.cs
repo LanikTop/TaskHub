@@ -16,12 +16,15 @@ namespace Api.Attributes
         {
             _stopwatch.Stop();
 
-            context.HttpContext.Response.OnStarting(() =>
+            if (!context.HttpContext.Response.HasStarted)
             {
-                context.HttpContext.Response.Headers["X-Response-Time-Ms"] =
-                    _stopwatch.ElapsedMilliseconds.ToString();
-                return Task.CompletedTask;
-            });
+                context.HttpContext.Response.OnStarting(() =>
+                {
+                    context.HttpContext.Response.Headers["X-Response-Time-Ms"] =
+                        _stopwatch.ElapsedMilliseconds.ToString();
+                    return Task.CompletedTask;
+                });
+            }
         }
     }
 }
