@@ -56,6 +56,11 @@ public sealed class Startup
         services.AddScoped<DeleteTaskUseCase>();
         services.AddScoped<DeleteTasksUseCase>();
 
+        services.AddScoped<StudentInfoHeadersFilter>();
+        services.AddScoped<RequestLoggingFilter>();
+        services.AddScoped<ValidateCreateTaskRequestFilter>();
+        services.AddScoped<ValidateSetTaskTitleRequestFilter>();
+
         services.AddScoped<ITaskService, TaskService>();
 
         services.AddCors(options =>
